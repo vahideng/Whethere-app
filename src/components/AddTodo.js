@@ -15,20 +15,26 @@ export class AddTodo extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.addTodos(this.state.text);
+
+    this.props.onAdding(
+      this.state.text,//text
+      this.props.DbData.length + 1,//id
+      0,//status
+      this.props.toToData.length + 1//order
+    );
     this.setState({ text: '' });
   };
 
   render() {
     return (
       <div>
-        <form className='form-inline' onSubmit={this.onSubmit}>
+        <form className="form-inline" onSubmit={this.onSubmit}>
           <label>
             <strong>Add Task</strong>
           </label>
           <input
-            type='text'
-            className='form-control mx-sm-3'
+            type="text"
+            className="form-control mx-sm-3"
             value={this.state.text}
             onChange={this.onChange}
           />
@@ -38,7 +44,4 @@ export class AddTodo extends Component {
   }
 }
 
-export default connect(
-  null,
-  { addTodos }
-)(AddTodo);
+export default AddTodo;
