@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TodoList from '../components/TodoList';
-import { fetchTodos } from '../actions/todosAction';
+
 import AddTodo from '../components/AddTodo';
-import InProgress from '../components/InProgress';
-import Done from '../components/Done';
+
 import Badge from '../components/Badge';
 
 import DBData from '../data/db.json';
 import * as actions from '../actions/index';
 
-import PropTypes from 'prop-types';
+
 
 export class todosContainer extends Component {
   componentDidMount() {
@@ -58,9 +57,7 @@ const mapDispatchToProps = dispatch => ({
   onChangeTarget : (text,id,status,order,elementId) => dispatch(actions.changeTarget(text,id,status,order,elementId))
 });
 
-todosContainer.propTypes = {
-  todos: PropTypes.array.isRequired
-};
+
 
 export default connect(
   mapStateToProps,

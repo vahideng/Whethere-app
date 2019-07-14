@@ -1,56 +1,55 @@
 import React from 'react';
 import Badge from './Badge';
 
-var selected
+var selected;
 
 class TodoList extends React.Component {
   allowsDrop(event) {
     event.preventDefault();
   }
 
-   
+  isBefore = (el1, el2) => {
+    let cur;
+    if (el2.parentNode === el1.parentNode) {
 
-   isBefore =( el1, el2 ) =>{
-  var cur
-  if ( el2.parentNode === el1.parentNode ) {
-    for ( cur = el1.previousSibling; cur; cur = cur.previousSibling ) {
-      if (cur === el2) return true
-    }
-  } else return false;
-}
-dragOver=( e )=> {
-
-  console.log("inja");
-  
+      console.log(cur,"cur");
+      
+      for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
+        console.log(cur,"cur2");
 
 
- if ( this.isBefore( selected, e.target ) ) e.target.parentNode.insertBefore( selected, e.target )
- else e.target.parentNode.insertBefore( selected, e.target.nextSibling )
-}
-  dragStart = (event, data) => {
-
-    selected = event.target
-    var dataToTransfer = JSON.stringify(data);
-    event.dataTransfer.setData('object', dataToTransfer);
-    const data11 = event.dataTransfer.getData('object');
-
+        if (cur === el2) return true;
+      }
+    } else return false;
   };
+  dragOver = e => {
+    
+  };
+  dragStart = (e, data) => {
+    selected = e.target;
   
-  dragEnd= ()=> {
-    selected = null
-  }
-  
+    if (this.isBefore(selected, e.target)) {
+      e.target.parentNode.insertBefore(selected, e.target);
+    } else {
+      e.target.parentNode.insertBefore(selected, e.target.nextSibling);
+    }
+    console.log(selected,"selected");
+    
+    var dataToTransfer = JSON.stringify(data);
+    e.dataTransfer.setData('object', dataToTransfer);
+   
+  };
+
+  dragEnd = () => {
+    selected = null;
+  };
 
   drop = event => {
     event.preventDefault();
-   
 
     const data11 = event.dataTransfer.getData('object');
 
-   
-
     let realData = JSON.parse(data11);
-   
 
     let text = realData.text;
     let id = realData.id;
@@ -64,6 +63,9 @@ dragOver=( e )=> {
 
     let data = null;
     if (this.props.data) {
+
+   
+      
       data = this.props.data;
       todoNum = this.props.data.length;
     }
@@ -84,16 +86,18 @@ dragOver=( e )=> {
           {data
             ? data.map(todo => {
                 return (
+          
                   <li
                     id={todo.id}
                     onDragEnd={this.dragEnd}
-                    onDragOver={this.dragOver}
+                    // onDragOver={this.dragOver}
                     draggable={true}
                     onDragStart={event => this.dragStart(event, todo)}
                     key={todo.id}
                   >
                     {todo.text}
                   </li>
+                
                 );
               })
             : null}
