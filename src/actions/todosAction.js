@@ -1,5 +1,8 @@
 import * as actionTypes from './types';
-import uuid from 'uuid/v4';
+
+import DBData from '../data/db.json';
+
+const dataBase = DBData[0].cards;
 
 export const fetchTodosInit = () => dispatch => {
   dispatch({
@@ -14,42 +17,38 @@ export const fetchTodosFailed = () => dispatch => {
 };
 
 export const fetchTodosSuccess = data => dispatch => {
-
-  console.log(data,"ppppp");
-  
   dispatch({
     type: actionTypes.FETCH_TODOS_SUCCESS,
     payload: data
   });
 };
-export const addTodos = data => { // readData
-  return dispatch => { 
+
+export const fetchData = () => {
+  // readData
+  return dispatch => {
     dispatch(fetchTodosInit());
-    dispatch(fetchTodosSuccess(data));
+    dispatch(fetchTodosSuccess(dataBase));
   };
 };
 
+export const add = (text, id, status, order) => dispatch => {
+  let data = { text, id, status, order };
 
-export const add = (text,id,status,order) => dispatch => {
-
-
-  let data ={text,id,status,order}
-  console.log(data,"{{{{{{{{{{");
-  
-  
   dispatch({
     type: actionTypes.ADD_TODOS,
     payload: data
   });
 };
 
-export const changeTarget = (text,id,status,order, elementId) => dispatch => {
+export const changeTarget = (
+  text,
+  id,
+  status,
+  order,
+  elementId
+) => dispatch => {
+  let data = { text, id, status, order };
 
-
-  let data ={text,id,status,order}
-  console.log(data,"}}}}}}}}}");
-  
-  
   dispatch({
     type: actionTypes.CHANGE_TARGET,
     payload: data,
@@ -59,7 +58,12 @@ export const changeTarget = (text,id,status,order, elementId) => dispatch => {
 
 
 
+export const deleteData=(id)=>{
 
+  
 
-
-
+return {
+  type : actionTypes.DELETE_DATA,
+  payload: id
+}
+}

@@ -1,1 +1,1 @@
-export {addTodos,add,changeTarget } from './todosAction'
+export {fetchData,add,changeTarget ,deleteData} from './todosAction'

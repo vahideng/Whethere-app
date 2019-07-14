@@ -11,3 +11,6 @@ export const DRAG_DROP_TODOS = 'DRAG_DROP_TODOS';
 export const CHANGE_TARGET = 'CHANGE_TARGET';
 
 
+export const DELETE_DATA = "DELETE_DATA"
+
+

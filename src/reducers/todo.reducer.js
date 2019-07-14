@@ -1,7 +1,11 @@
 import * as actionsTypes from '../actions/types';
 
+
 const initialState = {
-  cards: [],
+  cards: [{
+    todo : [],
+
+  }],
   loading: false,
   message: ''
 };
@@ -23,7 +27,7 @@ export default function(state = initialState, action) {
       };
 
     case actionsTypes.FETCH_TODOS_SUCCESS:
-      console.log(payload, 'payload');
+   
 
       return {
         ...state,
@@ -39,25 +43,43 @@ export default function(state = initialState, action) {
       };
 
     case actionsTypes.CHANGE_TARGET:
-      let status = 0;
 
-      if (action.elementId === 'todoID') {
-        status = 0;
-      }
-      if (action.elementId === 'progressID') {
-        status = 1;
-      }
-      if (action.elementId === 'DoneID') {
-        status = 2;
-      }
-
+      const checkElementIdStatus = {
+        todoID: 0,
+        progressID: 1,
+        DoneID: 2
+      };
+      let status= checkElementIdStatus[action.elementId] || 0;
+      
       return {
         ...state,
-        cards: state.cards.map((x, i) =>
-          x.id === payload.id ? { ...x, status: status } : x
+        cards: state.cards.map((card) => 
+          card.id === payload.id ? { ...card, status: status } : card
         )
       };
 
+
+      case actionsTypes.DELETE_DATA: {
+
+        console.log(payload,"payload.id");
+        
+
+       let updatedCards=  state.cards.filter(item =>{
+         console.log(item.id,"item.id");
+         
+       return item.id !== payload
+
+       })
+
+       console.log(updatedCards,"updatedCards");
+       
+        return {
+          ...state,
+          cards: updatedCards
+        };
+
+
+      }
     default:
       return state;
   }
